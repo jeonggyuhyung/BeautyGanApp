@@ -16,14 +16,14 @@ import numpy as np
 
 
 detector = dlib.get_frontal_face_detector() # 얼굴 찾아주는 것
-sp = dlib.shape_predictor('./models/shape_predictor_5_face_landmarks.dat') # 머신러닝으로 만들어진 모델
+sp = dlib.shape_predictor('../models/shape_predictor_5_face_landmarks.dat') # 머신러닝으로 만들어진 모델
 
 
 # In[31]:
 
 
 # 이미지 로드
-img = dlib.load_rgb_image('./imgs/12.jpg')
+img = dlib.load_rgb_image('../imgs/12.jpg')
 
 # 출력
 plt.figure(figsize=(16,10))
@@ -90,7 +90,7 @@ def align_faces(img):
         objs.append(s)
     faces = dlib.get_face_chips(img, objs, size=256, padding=0.35) # get_face_chips는 얼굴 영역만 잘라서 이미지로 만들어 준다.
     return faces
-test_img = dlib.load_rgb_image('./imgs/02.jpg')
+test_img = dlib.load_rgb_image('../imgs/02.jpg')
 test_faces = align_faces(test_img)
 fig, axes = plt.subplots(1, len(test_faces)+1, figsize=(20,16))
 axes[0].imshow(test_img)
@@ -104,8 +104,8 @@ for i, face in enumerate(test_faces):
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 # 모델 임포트
-saver = tf.train.import_meta_graph('./models/model.meta')
-saver.restore(sess, tf.train.latest_checkpoint('./models'))
+saver = tf.train.import_meta_graph('../models/model.meta')
+saver.restore(sess, tf.train.latest_checkpoint('../models'))
 graph = tf.get_default_graph()
 X = graph.get_tensor_by_name('X:0')
 Y = graph.get_tensor_by_name('Y:0')
@@ -128,11 +128,11 @@ def deprocess(img):
 
 
 # 소스 이미지
-img1 = dlib.load_rgb_image('./imgs/12.jpg') 
+img1 = dlib.load_rgb_image('../imgs/12.jpg')
 img1_faces = align_faces(img1)
 
 # 레퍼런스 이미지
-img2 = dlib.load_rgb_image('./imgs/makeup/vFG56.png')
+img2 = dlib.load_rgb_image('../imgs/makeup/vFG56.png')
 img2_faces = align_faces(img2)
 
 fig, axes = plt.subplots(1,2,figsize=(16,10))
